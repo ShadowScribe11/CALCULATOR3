@@ -1,11 +1,13 @@
 from loguru import logger
 from cryptography.fernet import Fernet
 from view import user_menu, answer_with_result
+from model import write, read
 
 
 def controller():
     logger.info("Контроллер создан")
 
+    data =  read()
     KEY = Fernet.generate_key()
     cipher = Fernet(KEY)
 
