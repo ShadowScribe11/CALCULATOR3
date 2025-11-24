@@ -1,3 +1,4 @@
+from datetime import datetime
 from loguru import logger
 from cryptography.fernet import Fernet
 from view import user_menu, answer_with_result
@@ -5,12 +6,14 @@ from model import write, read
 
 
 def controller():
+    """
+    data = {"date: KEY}
+    """
     logger.info("Контроллер создан")
 
-    data =  read()
+    data = read()
     KEY = Fernet.generate_key()
     cipher = Fernet(KEY)
-
     while True:
         line = user_menu()
         logger.info(f"В переменной line: {line}")
@@ -24,6 +27,8 @@ def controller():
             return
         else:
             logger.error("Пользователь выбрал не 1 и не 2!")
+        data.update({f"{datetime.now()}": KEY})
+        write(data)
 
 
 def encrypt(text, cipher):

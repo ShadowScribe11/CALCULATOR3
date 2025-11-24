@@ -1,12 +1,17 @@
 import json
+from loguru import logger
 
 
 def write(data):
     with open('data.lson', 'w', encoding="UTF-8") as f:
         json.dump(data, f)
-        
+
 
 def read():
-    with open("data.json", "r", encoding="UTF-8") as f:
-        data = json.loud(f)
+    try:
+        with open("data.json", "r+", encoding="UTF-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        data = {"key": "value"}
+        logger.error(e)
     return data
